@@ -1,14 +1,20 @@
 function Color(r, g, b, a) {
+	var hexData;
+	
 	if (((((r | g) | b) | a) & -256) != 0) {
-    	r = r < 0 ? 0 : (r > 255 ? 255 : r);
-        g = g < 0 ? 0 : (g > 255 ? 255 : g);
-        b = b < 0 ? 0 : (b > 255 ? 255 : b);
-        a = a < 0 ? 0 : (a > 255 ? 255 : a);
-    } else {
-    	r = r / 255;
-    	g = g / 255;
-    	b = b / 255;
-    	a = a / 255;
+		r = r < 0 ? 0 : (r > 255 ? 255 : r);
+		g = g < 0 ? 0 : (g > 255 ? 255 : g);
+		b = b < 0 ? 0 : (b > 255 ? 255 : b);
+		a = a < 0 ? 0 : (a > 255 ? 255 : a);
+		
+		hexData = [ r, g, b ];
+    	} else {
+    		hexData = [ r, g, b ];
+    		
+		r = r / 255;
+		g = g / 255;
+		b = b / 255;
+		a = a / 255;
 	}
 	
 	this.r = r;
@@ -16,12 +22,14 @@ function Color(r, g, b, a) {
 	this.b = b;
 	this.a = a;
 	
-	this.data = [ r, g, b, a ];
+	this.data = [ this.r, this.g, this.b, this.a ];
 	
-	this.hex = "#";
-	for (var i = 0, color; i < this.data.length; i++) {
-	    color = this.data[i].toString(16);
-	    this.hex = this.hex + (color.length == 1 ? "0" + color : color);
+	this.hex = "0x";
+	var color = "";
+	for (var i = 0; i < hexData.length; i++) {
+		var number = new Number(hexData[i]);
+		color = number.toString(16);
+		this.hex = this.hex + (color.length == 1 ? "0" + color : color);
 	}
 	this.hex = this.hex.toUpperCase();
 }
@@ -117,7 +125,7 @@ Color.cadetBlue=new Color(95,158,160,255);
 Color.chartreuse=new Color(127,255,0,255);
 Color.chocolate=new Color(210,105,30,255);
 Color.coral=new Color(255,127,80,255);
-Color.cornflowerBlue=new Color(0xffed9564);
+Color.cornflowerBlue=new Color(100,149,237,255);
 Color.cornsilk=new Color(255,248,220,255);
 Color.crimson=new Color(220,20,60,255);
 Color.cyan=new Color(0,255,255,255);

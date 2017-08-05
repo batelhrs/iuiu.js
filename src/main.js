@@ -3,5 +3,6 @@ var IUIU = {
 	Screen : Screen,
 	Vector: Vector,
 	Color: Color,
-	Graphics: Graphics
+	Graphics: Graphics,
+	Editor: { Components : { } }
 };

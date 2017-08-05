@@ -20,7 +20,7 @@ Layer.prototype = {
 	addObject : function(source) {
 		// ¿½±´param
 		var obj = new Component();
-		obj.name = CryptoJS.MD5(new Date().getTime());
+		obj.name = guid();
 		obj.params = source.params ? source.params.slice(0, source.params.length) : [];
 		obj.onDraw = source.onDraw;
 		obj.onUpdate = source.onUpdate;
@@ -28,6 +28,9 @@ Layer.prototype = {
 		this.objects.push(obj);
 		
 		return obj;				
+	},
+	removeObject : function(index) {
+		this.objects.splice(index, 1);
 	},
 	onUpdate : function(time) {
 		for(var i = 0; i < this.objects.length; i++) {
@@ -46,3 +49,10 @@ Layer.prototype = {
 		}
 	}
 };
+
+function guid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+    return v.toString(16);
+  });
+}

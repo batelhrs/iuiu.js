@@ -8,8 +8,12 @@ function Screen()  {
 Screen.prototype = {
 	addLayer : function(name) {
 		var layer = new Layer();
+		layer.name = name;
 		this.layers.push(layer);
 		return layer;
+	},
+	removeLayer : function(index) {
+		this.layers.splice(index, 1);
 	},
 	onUpdate : function(time) {
 		for(var i = 0; i < this.layers.length; i++) {
@@ -23,7 +27,7 @@ Screen.prototype = {
 		for(var i = 0; i < this.layers.length; i++) {
 			var layer = this.layers[i];
 			if(layer.onDraw) {
-				layer.onDraw(time);
+				layer.onDraw(g);
 			}
 		}
 	},
@@ -42,8 +46,12 @@ Screen.prototype = {
 			var scr = context;
 			if(!scr.isPaused) {
 				var now = new Date().getTime();
-				if (scr.onUpdate) gl.onUpdate((now - time) / 1000);
-				if (scr.onDraw) gl.onDraw(scr.graphics);
+				if (scr.onUpdate) scr.onUpdate((now - time) / 1000);
+				if (scr.onDraw) {
+					scr.graphics.clear(Color.cornflowerBlue);
+					scr.onDraw(scr.graphics);
+					scr.graphics.flush();
+				}
 				post(update);
 			}
 			time = now;

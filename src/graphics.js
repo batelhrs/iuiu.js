@@ -7,7 +7,14 @@ Graphics.prototype = {
 			var child = this.app.stage.getChildAt(0); 
 			this.app.stage.removeChild(child); 
 		}
-		this.app.stage.renderer.backgroundColor = color.toHex();
+		this.app.renderer.backgroundColor = color.toHex();
+	},
+	drawLine : function(start, end, color, thinkness) {
+		var line = new PIXI.Graphics();
+		line.lineStyle(thinkness, color.toHex(), color.a);
+		line.moveTo(start.x, start.y);
+		line.lineTo(end.x, end.y);
+		this.app.stage.addChild(line);
 	},
 	draw : function(texture, location, color, origin, rotation, scale, sourceRectangle) {
 		// texture
@@ -29,7 +36,7 @@ Graphics.prototype = {
 		sprite.y = location.y;
 		
 		// color
-		if(color != Color.white) {
+		if(color.r != Color.white.r || color.g != Color.white.g || color.b != Color.white.b || color.a != Color.White.a) {
 			var colorFilter = new PIXI.ColorMatrixFilter();
 			colorFilter.matrix = [
 				// R, G, B, A
@@ -55,6 +62,6 @@ Graphics.prototype = {
 		this.app.stage.addChild(sprite);
 	},
 	flush : function() {
-		this.app.stage.renderer.render(this.app.stage);
+		this.app.renderer.render(this.app.stage);
 	}
 };
