@@ -1,13 +1,13 @@
-function Graphics(stage) {
-	this.stage = stage;
+function Graphics(app) {
+	this.app = app;
 }
 Graphics.prototype = {
 	clear : function(color) {
-		while (this.stage.children.length > 0) { 
-			var child = this.stage.getChildAt(0); 
-			this.stage.removeChild(child); 
+		while (this.app.stage.children.length > 0) { 
+			var child = this.app.stage.getChildAt(0); 
+			this.app.stage.removeChild(child); 
 		}
-		stage.renderer.backgroundColor = color.toHex();
+		this.app.stage.renderer.backgroundColor = color.toHex();
 	},
 	draw : function(texture, location, color, origin, rotation, scale, sourceRectangle) {
 		// texture
@@ -52,9 +52,9 @@ Graphics.prototype = {
 		sprite.scale.x = scale.x;
 		sprite.scale.y = scale.y;
 		
-		this.stage.addChild(sprite);
-	}
+		this.app.stage.addChild(sprite);
+	},
 	flush : function() {
-		this.stage.renderer.render(this.stage);
+		this.app.stage.renderer.render(this.app.stage);
 	}
 };
