@@ -1,6 +1,9 @@
 var IUIU = {
+	Common : Common,
+	Image : Image,
 	Layer : Layer,
-	Screen : Screen,
+	Level : Level,
+	Stage : Stage,
 	Vector: Vector,
 	Color: Color,
 	Graphics: Graphics,

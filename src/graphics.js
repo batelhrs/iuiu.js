@@ -16,16 +16,16 @@ Graphics.prototype = {
 		line.lineTo(end.x, end.y);
 		this.app.stage.addChild(line);
 	},
-	draw : function(texture, location, color, origin, rotation, scale, sourceRectangle) {
+	draw : function(image, location, color, origin, rotation, scale, sourceRectangle) {
 		// texture
-		var texture = PIXI.loader.resources[texture].texture;
+		var texture = image.texture;
 		
 		// sourceRectangle
 		if(sourceRectangle) {
 			texture.frame = new PIXI.Rectangle(sourceRectangle.x, sourceRectangle.y, sourceRectangle.width, sourceRectangle.height);
 		}
 		else {
-			texture.frame = null;
+			texture.frame = new PIXI.Rectangle(0, 0, image.width, image.height);
 		}
 		
 		// sprite
@@ -36,8 +36,8 @@ Graphics.prototype = {
 		sprite.y = location.y;
 		
 		// color
-		if(color.r != Color.white.r || color.g != Color.white.g || color.b != Color.white.b || color.a != Color.White.a) {
-			var colorFilter = new PIXI.ColorMatrixFilter();
+		if(color.r != Color.white.r || color.g != Color.white.g || color.b != Color.white.b || color.a != Color.white.a) {
+			var colorFilter = new PIXI.filters.ColorMatrixFilter();
 			colorFilter.matrix = [
 				// R, G, B, A
 				color.r, 0, 0, 0, 0,  // R
@@ -45,12 +45,12 @@ Graphics.prototype = {
 				0, 0, color.b, 0, 0,  // B
 				0, 0, 0, color.a, 0  // A
 			];
-			sprite.filters.push(colorFilter);
+			sprite.filters = [colorFilter];
 		}
 		
 		// origin
-		sprite.anchor.x = origin.x;
-		sprite.anchor.y = origin.y;
+		sprite.anchor.x = origin.x / image.width;
+		sprite.anchor.y = origin.y / image.height;
 		
 		// rotation
 		sprite.rotation = rotation;
@@ -63,5 +63,8 @@ Graphics.prototype = {
 	},
 	flush : function() {
 		this.app.renderer.render(this.app.stage);
+	},
+	resize : function(width, height) {
+		this.app.renderer.resize(width, height);
 	}
 };

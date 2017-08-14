@@ -19,11 +19,11 @@ Layer.prototype = {
 	*/
 	addObject : function(source) {
 		// ¿½±´param
-		var obj = new Component();
+		var obj = source.create();
 		obj.name = guid();
-		obj.params = source.params ? source.params.slice(0, source.params.length) : [];
-		obj.onDraw = source.onDraw;
-		obj.onUpdate = source.onUpdate;
+		obj.isVisual = true;
+		obj.layer = this;
+		obj.properties = source.properties ? Common.clone(source.properties) : {};
 		
 		this.objects.push(obj);
 		
@@ -42,8 +42,10 @@ Layer.prototype = {
 	onDraw : function(g) {
 		if(this.isVisual) {
 			for(var i = 0; i < this.objects.length; i++) {
-				if(this.objects[i].onDraw) {
-					this.objects[i].onDraw(g);
+				if(this.objects[i].isVisual) {
+					if(this.objects[i].onDraw) {
+						this.objects[i].onDraw(g);
+					}
 				}
 			}
 		}
