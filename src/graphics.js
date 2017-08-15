@@ -31,9 +31,13 @@ Graphics.prototype = {
 		// sprite
 		var sprite = new PIXI.Sprite(texture);
 		
+		// origin
+		sprite.anchor.x = origin.x / image.width;
+		sprite.anchor.y = origin.y / image.height;
+		
 		// location
-		sprite.x = location.x;
-		sprite.y = location.y;
+		sprite.x = location.x + origin.x;
+		sprite.y = location.y + origin.y;
 		
 		// color
 		if(color.r != Color.white.r || color.g != Color.white.g || color.b != Color.white.b || color.a != Color.white.a) {
@@ -47,10 +51,6 @@ Graphics.prototype = {
 			];
 			sprite.filters = [colorFilter];
 		}
-		
-		// origin
-		sprite.anchor.x = origin.x / image.width;
-		sprite.anchor.y = origin.y / image.height;
 		
 		// rotation
 		sprite.rotation = rotation;

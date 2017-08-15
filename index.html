@@ -16,7 +16,7 @@
 				name : "新物体",
 				properties : { a : 1 },
 				create  : function(g) {
-					return { draw : function(g) { g.draw("res/film.png", new IUIU.Vector(100, 100),IUIU.Color.red, IUIU.Vector.zero,0,IUIU.Vector.one, null) } }
+					return { image : IUIU.Image.fromURL("res/film.png"), onDraw : function(g) { g.draw(this.image, new IUIU.Vector(100, 100),IUIU.Color.red, IUIU.Vector.zero,0,IUIU.Vector.one, null) } }
 				}
 			});
     		</script>
