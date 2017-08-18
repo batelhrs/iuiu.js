@@ -7,5 +7,5 @@ var IUIU = {
 	Vector: Vector,
 	Color: Color,
 	Graphics: Graphics,
-	Editor: { Components : { } }
+	Editor: { Components : { }, Events : { } }
 };
